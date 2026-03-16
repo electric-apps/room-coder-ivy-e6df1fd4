@@ -1,44 +1,53 @@
-# Kyle's Stack
+# Todo App
 
-A starter for building apps with TanStack Start, Radix UI, and capsize typography — with [`@tanstack/intent`](https://github.com/TanStack/intent) skills pre-installed for **Electric**, **TanStack DB**, and **Durable Streams**.
+A local-first, real-time todo application built with Electric SQL and TanStack DB. Changes sync instantly across all connected clients via Electric's Postgres-to-client sync.
 
-## Quick Start
+## Screenshot
+
+![Todo App](screenshot.png)
+
+## Features
+
+- Add new todos with a title
+- Toggle todos complete/incomplete with a checkbox
+- Delete individual todos
+- Filter todos: All / Active / Completed
+- Live counters for active and completed todos
+- Real-time sync — changes appear instantly across all open tabs/clients
+- Optimistic mutations — UI updates immediately, no waiting for the server
+
+## Getting Started
 
 ```bash
-npx gitpick KyleAMathews/kpb my-app
-cd my-app
 pnpm install
-pnpm dev
+pnpm dev:start
 ```
 
-## Included Skills
+The app will be available at http://localhost:5173.
 
-This starter comes with skills pre-installed. Just ask your coding agent:
+## Tech Stack
 
-**Electric** — Sync Postgres to your app
-- "Set up Electric sync for my Postgres database"
-- "Run the Electric security checklist"
+- **Electric SQL** — Postgres-to-client real-time sync
+- **TanStack DB** — Reactive collections and optimistic mutations
+- **Drizzle ORM** — Type-safe Postgres schema and migrations
+- **TanStack Start** — Full-stack React meta-framework with SSR
+- **Radix UI Themes** — Accessible, themeable component library
+- **Biome** — Fast linting and formatting
 
-**TanStack DB** — Reactive client-side data
-- "Add a TanStack DB collection for the users table"
-- "Set up live queries for my todos"
+## Project Structure
 
-**Durable Streams** — Real-time state sync
-- "Set up a Durable Streams dev environment"
-- "Add presence tracking to my app"
-
-**Radix + Capsize** — Typography
-- "Switch to the Playfair theme"
-- "Show me more font theme options"
-
-## What's Included
-
-- **TanStack Start** - Full-stack React framework
-- **Radix UI** - Accessible components with themes
-- **Capsize typography** - Pixel-perfect text rendering
-- **Dozens of font pairings included** - Ask the agent to set one up
-- **Biome** - Fast linting and formatting
-
-## License
-
-MIT
+```
+src/
+  db/
+    schema.ts          # Drizzle table definitions
+    zod-schemas.ts     # Zod schemas derived from Drizzle
+    collections/
+      todos.ts         # TanStack DB collection with Electric sync
+  routes/
+    index.tsx          # Main todo page UI
+    api/
+      todos.ts         # Electric shape proxy route
+      mutations/
+        todos.ts       # POST handler (create)
+        todos.$id.ts   # PATCH/DELETE handlers (update/delete)
+```
